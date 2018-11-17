@@ -1,0 +1,22 @@
+{
+  "name": "be_exam_sr",
+  "version": "1.0.0",
+  "description": "This repo contains an exercise intended for Back-End Engineers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitsean/be_exam_sr.git"
+  },
+  "author": "Sean Reid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitsean/be_exam_sr/issues"
+  },
+  "homepage": "https://github.com/gitsean/be_exam_sr#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
