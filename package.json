@@ -4,6 +4,8 @@
   "description": "This repo contains an exercise intended for Back-End Engineers.",
   "main": "index.js",
   "scripts": {
+    "build": "babel ./services --experimental --source-maps-inline -d ./dist",
+    "start": "npm run build",
     "test": "jest"
   },
   "repository": {
@@ -29,5 +31,8 @@
       "^.+\\.jsx?$": "babel-jest"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0"
+  }
 }
