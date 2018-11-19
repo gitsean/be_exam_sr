@@ -16,6 +16,7 @@ function delay(t, val) {
 
 describe("detect.input.js", () => {
   beforeAll(async () => {
+    watcher();
     process.env.DETECTED = "false";
     try {
       await write(file, "Not much here. Terribly sorry.", "utf-8");

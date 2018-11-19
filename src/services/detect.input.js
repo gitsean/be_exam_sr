@@ -1,11 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { promisify } from "util";
 
 const dir = path.join(__dirname, "..", "input");
-const watch = promisify(fs.watch);
 
-// const res = watch(dir);
 const watcher = fs.watch(dir, (eventType, filename) => {
   console.log("SETTING.");
 
