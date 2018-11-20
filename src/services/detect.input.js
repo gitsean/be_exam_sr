@@ -16,7 +16,7 @@ const watcher = () => {
     const extArray = filename.split(".");
     const extenstion = extArray[extArray.length - 1].toLocaleLowerCase().trim();
     if (eventType === "change" && extenstion === "csv") {
-      createCsv();
+      createCsv(filename);
     }
 
     if (filename) {

@@ -8,9 +8,9 @@ async function userPrompt() {
   prompt.start();
   try {
     const { input, output, error } = await prompt.get([
-      { name: "input", description: "Input Folder Name", required: true },
-      { name: "output", description: "Output Folder Name", required: true },
-      { name: "error", description: "Error Folder Name", required: true }
+      { name: "input", description: "Input Folder Name", required: false },
+      { name: "output", description: "Output Folder Name", required: false },
+      { name: "error", description: "Error Folder Name", required: false }
     ]);
 
     const answers = {
