@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import createCsv from "./create.csv";
 
 const watcher = () => {
   const folder = process.env.INPUT || "input";
@@ -11,6 +12,12 @@ const watcher = () => {
   return fs.watch(dir, (eventType, filename) => {
     console.log("eventType - ", eventType);
     process.env.DETECTED = "true";
+
+    const extArray = filename.split(".");
+    const extenstion = extArray[extArray.length - 1].toLocaleLowerCase().trim();
+    if (eventType === "change" && extenstion === "csv") {
+      createCsv();
+    }
 
     if (filename) {
       console.log(`filename provided: ${filename}`);

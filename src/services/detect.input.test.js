@@ -3,7 +3,7 @@ import path from "path";
 import { promisify } from "util";
 import watcher from "./detect.input";
 
-const file = path.join(__dirname, "..", "input", "/test.txt");
+const file = path.join(__dirname, "..", "input", "test.txt");
 const write = promisify(fs.appendFile);
 const del = promisify(fs.unlink);
 function delay(t, val) {
@@ -32,6 +32,7 @@ describe("detect.input.js", () => {
     } catch (e) {
       console.log("error: ", e);
     }
+    process.exit;
   });
 
   test("should detect change when file is created", async () => {
