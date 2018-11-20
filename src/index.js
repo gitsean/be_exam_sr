@@ -1,6 +1,7 @@
 import watcher from "./services/detect.input";
 import path from "path";
 import prompt from "prompt-async";
+import createFolders from "./services/create.folders";
 const file = path.join(__dirname, "..", "input", "/test.txt");
 
 async function userPrompt() {
@@ -24,9 +25,11 @@ async function userPrompt() {
   }
 }
 
-async function askUser() {
+async function run() {
   const folderNames = await userPrompt();
+  createFolders(folderNames);
+  console.log("process.env.INPUT from index - ", process.env.INPUT);
   watcher();
 }
 
-askUser();
+run();

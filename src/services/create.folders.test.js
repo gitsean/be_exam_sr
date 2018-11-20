@@ -1,11 +1,19 @@
 import fs from "fs";
 import path from "path";
-import { promisify } from "util";
-import createFolder from "./create.folder";
+import createFolders from "./create.folders";
 
 const dir = name => {
   return path.join(__dirname, "..", name);
 };
+const testFolderNames = {
+  input: "uniqueInput",
+  output: "uniqueOutput",
+  error: "uniqueError"
+};
+
+const inputPath = dir(testFolderNames.input);
+const outputPath = dir(testFolderNames.output);
+const errorPath = dir(testFolderNames.error);
 
 afterAll(async () => {
   fs.rmdirSync(dir(testFolderNames.input));
@@ -17,16 +25,6 @@ afterAll(async () => {
 });
 
 describe("create.folders.js", () => {
-  const testFolderNames = {
-    input: "uniqueInput",
-    output: "uniqueOutput",
-    error: "uniqueError"
-  };
-
-  const inputPath = dir(testFolderNames.input);
-  const outputPath = dir(testFolderNames.output);
-  const errorPath = dir(testFolderNames.error);
-
   test("should start with no recognized folders", () => {
     expect(fs.existsSync(inputPath)).toBe(false);
     expect(fs.existsSync(outputPath)).toBe(false);
@@ -34,7 +32,7 @@ describe("create.folders.js", () => {
   });
 
   test("should create all folders if they do not exists", async () => {
-    await createFolder(testFolderNames);
+    await createFolders(testFolderNames);
 
     expect(fs.existsSync(inputPath)).toBe(true);
     expect(fs.existsSync(outputPath)).toBe(true);
@@ -44,7 +42,7 @@ describe("create.folders.js", () => {
   test("should not create a folder or error if one already exists with the provided name", async () => {
     let error = null;
     try {
-      await createFolder(testFolderNames);
+      await createFolders(testFolderNames);
     } catch (err) {
       error = err;
     }

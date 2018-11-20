@@ -1,26 +1,18 @@
 import fs from "fs";
 import path from "path";
-import { promisify } from "util";
-import watcher from "./detect.input";
 
-const file = path.join(__dirname, "..", "input", "/test.txt");
-const exists = promisify(fs.exists);
-const del = promisify(fs.unlink);
+const dir = name => {
+  return path.join(__dirname, "..", name);
+};
 
-describe("create.folders.js", () => {
-  beforeAll(async () => {});
-
-  afterAll(async () => {
-    process.env.DETECTED = "false";
-    try {
-      await del(file);
-    } catch (e) {
-      console.log("error: ", e);
+const createFolders = async folders => {
+  Object.keys(folders).map(key => {
+    const d = dir(folders[key]);
+    process.env[key.toUpperCase()] = folders[key];
+    if (!fs.existsSync(d)) {
+      fs.mkdirSync(d);
     }
   });
+};
 
-  test("should detect change when file is created", async () => {
-    await delay(500);
-    expect(process.env.DETECTED).toBe("true");
-  });
-});
+module.exports = createFolders;

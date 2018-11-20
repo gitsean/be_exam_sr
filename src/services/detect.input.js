@@ -1,19 +1,23 @@
 import fs from "fs";
 import path from "path";
 
-const dir = path.join(__dirname, "..", "input");
+const watcher = () => {
+  const folder = process.env.INPUT || "input";
+  const dir = path.join(__dirname, "..", folder);
 
-const watcher = fs.watch(dir, (eventType, filename) => {
-  console.log("SETTING.");
+  console.log(`Watching for files in folder ${folder}`);
+  console.log("Ctrl + C to exit");
 
-  process.env.DETECTED = "true";
+  return fs.watch(dir, (eventType, filename) => {
+    console.log("eventType - ", eventType);
+    process.env.DETECTED = "true";
 
-  console.log(`event type is: ${eventType}`);
-  if (filename) {
-    console.log(`filename provided: ${filename}`);
-  } else {
-    console.log("filename not provided");
-  }
-});
+    if (filename) {
+      console.log(`filename provided: ${filename}`);
+    } else {
+      console.log("filename not provided");
+    }
+  });
+};
 
 module.exports = watcher;

@@ -34,7 +34,6 @@
   "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
-    "prompt": "^1.0.0",
     "prompt-async": "^0.9.9"
   }
 }
