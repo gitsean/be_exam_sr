@@ -14,9 +14,10 @@ const watcher = () => {
     process.env.DETECTED = "true";
 
     const extArray = filename.split(".");
-    const extenstion = extArray[extArray.length - 1].toLocaleLowerCase().trim();
-    if (eventType === "change" && extenstion === "csv") {
-      createCsv(filename);
+    const extension = extArray[extArray.length - 1].toLocaleLowerCase().trim();
+    if (eventType === "change" && extension === "csv") {
+      const name = extArray.splice(-1, 1).join("");
+      createCsv(name);
     }
 
     if (filename) {

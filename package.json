@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel ./src --experimental --source-maps-inline --copy-files --ignore 'src/**/*.test.js' -d ./dist",
     "start": "npm run build && node ./dist/index.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",

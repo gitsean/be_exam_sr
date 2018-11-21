@@ -3,7 +3,7 @@ import path from "path";
 import { promisify } from "util";
 import watcher from "./detect.input";
 
-const file = path.join(__dirname, "..", "input", "test.txt");
+const ifile = path.join(__dirname, "..", "input", "test.txt");
 const write = promisify(fs.appendFile);
 const del = promisify(fs.unlink);
 function delay(t, val) {
@@ -16,10 +16,10 @@ function delay(t, val) {
 
 describe("detect.input.js", () => {
   beforeAll(async () => {
-    watcher();
     process.env.DETECTED = "false";
+    watcher();
     try {
-      await write(file, "Not much here. Terribly sorry.", "utf-8");
+      await write(ifile, "Not much here. Terribly sorry.", "utf-8");
     } catch (e) {
       console.log("error: ", e);
     }
@@ -28,7 +28,7 @@ describe("detect.input.js", () => {
   afterAll(async () => {
     process.env.DETECTED = "false";
     try {
-      await del(file);
+      await del(ifile);
     } catch (e) {
       console.log("error: ", e);
     }
@@ -36,7 +36,7 @@ describe("detect.input.js", () => {
   });
 
   test("should detect change when file is created", async () => {
-    await delay(500);
+    await delay(2000);
     expect(process.env.DETECTED).toBe("true");
   });
 });
