@@ -9,15 +9,20 @@ const watcher = () => {
   console.log(`Watching for files in folder ${folder}`);
   console.log("Ctrl + C to exit");
 
+  var lock = false;
+
   return fs.watch(dir, (eventType, filename) => {
-    console.log("eventType - ", eventType);
     process.env.DETECTED = "true";
 
     const extArray = filename.split(".");
+
     const extension = extArray[extArray.length - 1].toLocaleLowerCase().trim();
-    if (eventType === "change" && extension === "csv") {
-      const name = extArray.splice(-1, 1).join("");
+    if (eventType === "change" && extension === "csv" && !lock) {
+      lock = true;
+      extArray.pop();
+      const name = extArray.join("");
       createCsv(name);
+      setTimeout(() => (lock = false), 1000);
     }
 
     if (filename) {

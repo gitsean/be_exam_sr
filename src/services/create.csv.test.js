@@ -12,15 +12,23 @@ const efile = path.join(__dirname, "..", "error", "etest.csv");
 const write = promisify(fs.appendFile);
 const del = promisify(fs.unlink);
 
-describe("create.csv.js", () => {
+describe("create.csv.js", async () => {
   beforeAll(async () => {
+    const files = [cfile, jfile, ecfile, ejfile, efile];
+    const dels = [];
+    for (let file of files) {
+      if (fs.existsSync(file)) {
+        dels.push(del(file));
+      }
+    }
+    await Promise.all(files);
     const fileStr = `INTERNAL_ID,FIRST_NAME,MIDDLE_NAME,LAST_NAME,PHONE_NUM
       12345678,Bobby,,Tables,555-555-5555
       12345679,Linda,J,Son,555-555-5556
       12345680,Linda,J,Son,555-555-5557`;
 
     const badFileStr = `INTERNAL_ID,FIRST_NAME,MIDDLE_NAME,LAST_NAME,PHONE_NUM
-      12345678,Bobby,,Tables,555-555-5555,whattheheck
+      12345678,Bobby,,Tables,555-555-5555,whattheheck?
       12345679,Linda,J,Son,,555-555-5556,woof
       12345680,Linda,J,Son,555-555-5557`;
 
@@ -32,18 +40,8 @@ describe("create.csv.js", () => {
     }
   });
 
-  afterAll(async () => {
-    try {
-      await del(cfile);
-      await del(jfile);
-    } catch (e) {
-      console.log("error: ", e);
-    }
-  });
-
   test("should create a csv file", async () => {
     await createCsv("test2");
-
     expect(fs.existsSync(cfile)).toBe(true);
   });
 
@@ -53,15 +51,3 @@ describe("create.csv.js", () => {
     expect(fs.existsSync(efile)).toBe(true);
   });
 });
-
-// error records should be written to a csv file in error-directory
-
-// if errors exist, one error file is created per input file.
-
-// processing should continue in the event of an invalid row; all errors should be collected and added to the corresponding error csv.
-
-// an error record should contain:
-//     LINE_NUM : the number of the record which was invalid
-//     ERROR_MSG : a human readable error message about what validation failed
-// in the event of name collision, the latest file should overwrite the earlier version.
-// the error file should match the name of the input file.
