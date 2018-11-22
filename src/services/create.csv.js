@@ -11,7 +11,7 @@ const errorTest = line => {
   const tests = ["linelength"];
   const runners = {
     linelength: {
-      error: line.split(",").length === 5 ? true : false,
+      error: line.split(",").length !== 5 ? true : false,
       message: "Each row should have 5 columns"
     }
   };

@@ -24,12 +24,6 @@ const watcher = () => {
       createCsv(name);
       setTimeout(() => (lock = false), 1000);
     }
-
-    if (filename) {
-      console.log(`filename provided: ${filename}`);
-    } else {
-      console.log("filename not provided");
-    }
   });
 };
 
